@@ -11,11 +11,11 @@ With color scheme Monokai
 
 I recommend install another package along with this one, "Apply Syntax" package since this syntax does not take ownership of yml nor yaml files.
 
-### Package Manager
+### Package Control manager
 
-First, install the Package Control plugin, instructions here: http://wbond.net/sublime_packages/package_control.
+First, install the Package Control plugin, instructions here: https://packagecontrol.io/installation.
 
-Once you install Package Control, restart Sublime Text and bring up the Command Palette (`Command+Shift+P` on OS X, `Control+Shift+P` on Linux/Windows).
+Once you install Package Control, restart Sublime Text and bring up the Command Palette (`Command+Shift+P` on macOS, `Control+Shift+P` on GNU/Linux|Windows).
 
 Select "Package Control: Install Package", wait while Package Control fetches the latest package list, then select "Ansible" when the list appears.
 
@@ -26,11 +26,26 @@ Clone the repository in your Sublime Text "Packages" directory:
 
     git clone https://github.com/clifford-github/sublime-ansible.git Ansible
 
-The "Packages" directory is located at:
+The "Packages" directory can be located from Command Palette:
 
-* OS X:
-    `~/Library/Application Support/Sublime Text 2/Packages/`
-* Linux:
-    `~/.Sublime Text 2/Packages/`
-* Windows:
-    `%APPDATA%/Sublime Text 2/Packages/`
+* macOS: `Shift + Command + P`
+* GNU/Linux | Windows: `Shift + Control + P`
+
+Type `browse packages`
+
+That should give you the location of your Packages directory.
+
+### Apply Syntax helper
+
+This is an example to automatic select Ansible Syntax
+
+        "syntaxes": [
+                {
+                    "syntax": [
+                        "Ansible/Ansible"
+                    ],
+                    "rules": [
+                      {"file_path": ".*/(inventory|tasks|handlers|files|templates|roles|playbooks|.*_vars)/.*\\.y(a)?ml$"}
+                    ]
+                }
+            ]

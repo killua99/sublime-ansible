@@ -6,7 +6,6 @@ version: 2
 
 variables:
 
-  results: "(failed|succeeded|skipped)"
   operatos: |-
     (?x:
       \b(?:
@@ -38,45 +37,28 @@ contexts:
       push: Packages/YAML/YAML.sublime-syntax
       with_prototype:
         - include: comments
-        - include: entity-ansible
-        - include: constant-ansible
+        - include: entity_ansible
+        - include: constant_ansible
         - include: jinja
-        # - include: when-control
 
   comments:
     - match: \#
       scope: punctuation.definition.comment.ansible
-      push: comment_line
+      set: comment_line
 
   comment_line:
     - meta_scope: comment.line.ansible
-    - match: $\n?
-      set: main
+    - match: \n
+      pop: true
 
-  entity-ansible:
+  entity_ansible:
     - match: '- name:.*$'
       scope: entity.name.ansible
       pop: true
 
-  constant-results:
-    - match: \b{{results}}\b
-      scope: constant.other.ansible
-      pop: true
-
-  constant-ansible:
+  constant_ansible:
     - match: 'ansible_((?:\.)?\w+(\[\w\]+)?)+'
       scope: constant.other.ansible
-
-  when-control:
-    - match: '(?:(when)(:))'
-      captures:
-        1: entity.name.tag.ansible
-        2: punctuation.separator.ansible
-    - include: when-body
-
-  when-body:
-    - match: '^\s*-\s.*$'
-      set: keyword-control
 
   keyword-control:
     - match: '\s{{operatos}}\s'
@@ -96,8 +78,8 @@ contexts:
 
   jinja-expressions:
     - include: match_keywords
-    - include: constant-ansible
-    - include: single-functions
+    - include: constant_ansible
+    - include: single_functions
     - include: functions
 
   match_keywords:
@@ -116,9 +98,9 @@ contexts:
     - match: '{{builtin_tags}}'
       scope: keyword.other.tag.ansible
     - match: (\||==|!=)
-      scope: keyword.other.tag.ansible
+      scope: keyword.operator.ansible
 
-  single-functions:
+  single_functions:
     - match: (\s{{builtin_functions}}\s)
       scope: support.function.global.ansible
 
@@ -136,7 +118,7 @@ contexts:
         - match: '[a-zA-Z0-9_]+'
           scope: variable.parameter.ansible
         - match: \,
-          scope: punctuation.separator.parameters.twig
+          scope: punctuation.separator.parameters.ansible
 
   jinja-keyword-control:
     - match: (\||==|!=)
